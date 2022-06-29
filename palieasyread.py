@@ -1,13 +1,25 @@
 # -*- coding: utf-8 -*-
-
 # Split Roman pali words into syllables
 # It splits correctly for most of the words, but not all.
 
 # Update: https://github.com/vpnry/palieasyread
+# this version: 0.0.2
 
+
+# -------- modify these 3 values to your choice
+import sys
+import os
 import string
 import re
 from collections import OrderedDict
+my_word_divider = ' _ '
+my_syllable_divider = ' '
+my_show_origin = True
+# below is the app logic
+# don't modify if you don't know python
+
+
+args = sys.argv
 
 
 vowel_str = 'a,ā,i,ī,u,ū,e,o'
@@ -27,12 +39,13 @@ escape_xh = OrderedDict([
     ('ph', '9'),
     ('bh', '0'),
 
+    ('vh', '$'),
     # pariyogāḷhadhammo => pa ri yo gā ḷha dham mo
-    ('ḷh', '$'),
+    ('ḷh', '¢'),
     # gārayhā => gā ra yhā
-    ('yh', '%'),
-    ('br', '^'),
-    ('by', '&')])
+    ('yh', '£'),
+    ('br', '€'),
+    ('by', '¥')])
 
 
 final_manual_fix = OrderedDict([
@@ -47,6 +60,7 @@ final_manual_fix = OrderedDict([
     ('P@h', 'Ph'),
     ('B@h', 'Bh'),
 
+    ('V@h', 'Vh'),
     ('Ḷ@h', 'Ḷh'),
     ('Y@h', 'Yh'),
     ('B@r', 'Br'),
@@ -160,7 +174,7 @@ def check_div_collision(word_div, syl_div):
     return False
 
 
-def easy_read(text, word_div='] [', show_origin=True, syl_div=' '):
+def easy_read(text, word_div=' _ ', show_origin=True, syl_div=' '):
 
     error_div = check_div_collision(word_div, syl_div)
     if error_div:
@@ -168,7 +182,7 @@ def easy_read(text, word_div='] [', show_origin=True, syl_div=' '):
             'Error: word_div or syl_div must not contain these chars\n',
             not_allow_divs)
         print('Please use other dividers.')
-        return
+        return ''
 
     res = ''
     lines = text.strip().splitlines()
@@ -202,5 +216,66 @@ def easy_read(text, word_div='] [', show_origin=True, syl_div=' '):
     return res.strip()
 
 
+# ------- Command line -------
+
+def easy_read_text(*wordss):
+    text = ""
+    for word in wordss:
+        text += word + " "
+    text = text.strip()
+    res = easy_read(text,
+                    word_div=my_word_divider,
+                    show_origin=my_show_origin,
+                    syl_div=my_syllable_divider)
+    return res
+
+
+def easy_read_file(fn):
+    text = ''
+    with open(fn, 'r', encoding='utf-8') as f:
+        text = f.read()
+
+    res = easy_read(text,
+                    word_div=my_word_divider,
+                    show_origin=my_show_origin,
+                    syl_div=my_syllable_divider)
+    savefn = fn + '_done.txt'
+    with open(savefn, 'w', encoding='utf-8') as fo:
+        fo.write(res)
+    print('Done! Check:', savefn)
+
+
+def printHelp():
+    name = args[0]
+    print('How to use:')
+    print(
+        "1. To split a short pali text, run:\n  python3 " +
+        name +
+        " <text>")
+    print(
+        "2. To split a pali plain text file, run:\n  python3 " +
+        name +
+        " yourPaliFile.txt")
+    print('')
+
+
 if __name__ == '__main__':
-    print(easy_read('Bodhirukkhabodhigharaāsanagharasammuñjaniaṭṭadāruaṭṭavaccakuṭidvārakoṭṭhakapānīyakuṭipānīyamāḷakadantakaṭṭhamāḷakesupi'))
+    if len(args) > 0:
+        try:
+            if not os.path.isfile(args[1]):
+                try:
+                    tdone = easy_read_text(*args[1:])
+                    print(tdone)
+                except Exception as e:
+                    print("Errors occured! " + str(e))
+                    printHelp()
+            else:
+                try:
+                    print('Processing file:', args[1])
+                    easy_read_file(args[1])
+                except Exception as e:
+                    print("Errors occured! " + str(e))
+                    printHelp()
+
+        except IndexError:
+            printHelp()

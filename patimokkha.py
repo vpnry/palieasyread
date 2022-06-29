@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+'''Bhikkhupātimokkhapāḷi
+'''
+
 import os
 import re
 from bs4 import BeautifulSoup
@@ -7,7 +10,7 @@ from palieasyread import easy_read
 
 
 sylDIV = ' '
-wordDIV = '] ['
+wordDIV = ' _ '
 colorClass = ['b', 'r', 'o', 'g'] * 100
 is_colorify = False
 
