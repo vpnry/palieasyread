@@ -6,17 +6,18 @@
 # this version: 0.0.2
 
 
-# -------- modify these 3 values to your choice
 import sys
 import os
 import string
 import re
 from collections import OrderedDict
+
+
+# -------- modify these 3 values to your choice
 my_word_divider = ' _ '
 my_syllable_divider = ' '
 my_show_origin = True
 # below is the app logic
-# don't modify if you don't know python
 
 
 args = sys.argv

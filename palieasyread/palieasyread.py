@@ -1,20 +1,23 @@
 # -*- coding: utf-8 -*-
 # Split Roman pali words into syllables
 # It splits correctly for most of the words, but not all.
+
 # Update: https://github.com/vpnry/palieasyread
+# this version: 0.0.2
 
 
-# -------- modify these 3 values to your choice
 import sys
 import os
 import string
 import re
 from collections import OrderedDict
+
+
+# -------- modify these 3 values to your choice
 my_word_divider = ' _ '
 my_syllable_divider = ' '
 my_show_origin = True
 # below is the app logic
-# do not modify if you don't know python
 
 
 args = sys.argv
@@ -221,10 +224,11 @@ def easy_read_text(*wordss):
     for word in wordss:
         text += word + " "
     text = text.strip()
-    return easy_read(text,
-                     word_div=my_word_divider,
-                     show_origin=my_show_origin,
-                     syl_div=my_syllable_divider)
+    res = easy_read(text,
+                    word_div=my_word_divider,
+                    show_origin=my_show_origin,
+                    syl_div=my_syllable_divider)
+    return res
 
 
 def easy_read_file(fn):
@@ -244,7 +248,7 @@ def easy_read_file(fn):
 
 def printHelp():
     name = args[0]
-    print('')
+    print('How to use:')
     print(
         "1. To split a short pali text, run:\n  python3 " +
         name +
