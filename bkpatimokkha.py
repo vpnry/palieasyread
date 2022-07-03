@@ -2,7 +2,7 @@
 
 '''Split syllable in Bhikkhupātimokkhapāḷi
 
-Generate Bhikkhu_patimokkha_pali_syllable.epub with pandoc
+Generate Bhikkhupatimokkhapali_syllable_recitation.epub with pandoc
 '''
 
 import os
@@ -46,6 +46,7 @@ def colorify(sentence, syl_div, word_div):
 
 
 def main(fin):
+    save_html_file = fin.strip('_')
     with open(fin, 'r', encoding='utf-8') as fh:
         html = fh.read()
 
@@ -60,6 +61,24 @@ def main(fin):
     toc_rex = re.findall(rex, html_toc)
 
     res = html_head
+    
+    note = f'''<div style="border: grey solid 1px">
+<ul>
+Note:
+<br>
+<li>The Roman pāḷi text is from this VRI version https://www.tipitaka.org/romn/cscd/{save_html_file.replace('.html', '.xml')}</li>
+
+<li>Pāḷi syllable splitting lines are generated using this script https://github.com/vpnry/palieasyread</li>
+
+<li>This file and a recitation audio can be downloaded from: https://github.com/vpnry/patimokkha_recitation</li>
+
+<li>The syllable spliting lines may not be 100% perfect, but it can be helpful for beginners to follow along the recitation audio by the Sayadaw. When you are pretty familiar with the pronunciation and rhythm, it is better to use the normal writing words directly.</li>
+<li>This Dhamma material is for free distribution only.</li>
+</ul>
+</div>
+<br><br>
+'''
+    res += note
     for line in html_body.splitlines():
         if line.strip().startswith('<a name="'):
             line = line.replace('<a ', '<h2 ').replace('</a>', '</h2>')
@@ -89,12 +108,18 @@ def main(fin):
         '<title>Tīkā > Vinayapiṭaka (ṭīkā) > Dvemātikāpāḷi > Bhikkhupātimokkhapāḷi</title>',
         '<title>Dvemātikāpāḷi - Bhikkhupātimokkhapāḷi</title>')
     res = res.replace('="../pta/textAndMenu.css"', '="textAndMenu.css"')
+    
+    with open('textAndMenu.css', 'r', encoding='utf-8') as fi:
+        css = fi.read()
+
+    css = f'<style>\n{css}\n</style>'
+    res = res.replace('</head>', f'{css}\n</head>')
 
     # print(toc_rex)
     for k, v in toc_rex:
         res = res.replace(f'{k}"></h2>',
                           f'{k}">{v}</h2>')
-    save_html_file = fin.strip('_')
+    
     with open(save_html_file, 'w', encoding='utf-8') as fh:
         fh.write(res)
         print('Wrote', save_html_file)
