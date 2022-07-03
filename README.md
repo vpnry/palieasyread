@@ -30,9 +30,9 @@ If not, you need to install or update python. Visit [python](https://www.python.
 
 ### Step 2  download palieasyread
 
-Download [this repository](https://github.com/vpnry/palieasyread/archive/refs/heads/master.zip) and **unzip** it, you will see this standalone app file `palieasyread.py` and `example.txt`. 
+Download [this repository](https://github.com/vpnry/palieasyread/archive/refs/heads/master.zip) and **unzip** it, you will see this standalone app file `palieasyread.py` and `example.txt`.
 
-From `terminal`, use the command `cd` to go to that unzipped folder.
+Copy these 2 files to your convenient folder and from `terminal`, use the command `cd` to go to that folder.
 
 ### To convert a pali text file 
 
@@ -161,3 +161,14 @@ Ma.na.sā / ce / pa.duṭ.ṭhe.na, / bhā.sa.ti / vā / ka.ro.ti / vā;
 Ta.to / naṃ / duk.kha.man.ve.ti, / cak.kaṃ.va / va.ha.to / pa.daṃ.
 
 ```
+
+## Related resources
+
+### Bhikkhupātimokkhapāḷi recitation audio and ebooks
+
+
+Bhikkhupātimokkhapāḷi ebooks with Pāḷi syllable splitting lines  [https://github.com/vpnry/patimokkha_recitation](https://github.com/vpnry/patimokkha_recitation)
+
+
+![prc file on kindle ](Bhikkhu_patimokkhapali_syllable_recitation.jpg)
+

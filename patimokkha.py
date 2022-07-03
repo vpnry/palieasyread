@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
-'''Bhikkhupātimokkhapāḷi
+'''Split syllable in Bhikkhupātimokkhapāḷi
+
+Generate Bhikkhu_patimokkha_pali_syllable.epub with pandoc
 '''
 
 import os
@@ -98,12 +100,12 @@ def main(fin):
         print('Wrote', save_html_file)
 
     # epub gen
-    epub = 'Bhikkhupatimokkhapali-easyRead.epub'
+    epub = 'Bhikkhupatimokkhapali_syllable_recitation.epub'
 
     cmdepub = f'pandoc -f html -t epub -c textAndMenu.css -o {epub} {save_html_file}'
     e = os.system(cmdepub)
     if e == 0:
-        print('Generating EPUB Done')
+        print('Generating EPUB: Done')
 
 
 if __name__ == '__main__':
