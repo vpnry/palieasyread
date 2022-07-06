@@ -32,7 +32,7 @@ If not, you need to install or update python. Visit [python](https://www.python.
 
 Download [this repository](https://github.com/vpnry/palieasyread/archive/refs/heads/master.zip) and **unzip** it, you will see this standalone app file `palieasyread.py` and `example.txt`.
 
-Copy these 2 files to your convenient folder and from `terminal`, use the command `cd` to go to that folder.
+Copy these 2 files to your convenient folder and from `Terminal`, use the command `cd` to go to that folder.
 
 ### To convert a pali text file 
 
@@ -172,3 +172,23 @@ Bhikkhupātimokkhapāḷi ebooks with Pāḷi syllable splitting lines  [https:/
 
 ![prc file on kindle ](Bhikkhu_patimokkhapali_syllable_recitation.jpg)
 
+
+## Misc.
+
++ For Python users, to install it
+
+```bash
+
+python3 -m pip install git+https://github.com/vpnry/palieasyread.git#egg=palieasyread
+
+```
+
+Or 
+
+```bash 
+
+python3 setup.py install
+
+```
+
++ Pāḷi text to speech: based on these separated syllables?
