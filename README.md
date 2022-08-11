@@ -1,4 +1,4 @@
-Current version: 0.0.2
+Current version: 0.0.3
 Online demo [here](https://huggingface.co/spaces/dpc/palieasyread).
 
 
@@ -32,7 +32,7 @@ If not, you need to install or update python. Visit [python](https://www.python.
 
 Download [this repository](https://github.com/vpnry/palieasyread/archive/refs/heads/master.zip) and **unzip** it, you will see this standalone app file `palieasyread.py` and `example.txt`.
 
-Copy these 2 files to your convenient folder and from `Terminal`, use the command `cd` to go to that folder.
+Copy these 2 files to your convenient folder and from `terminal`, use the command `cd` to go to that folder.
 
 ### To convert a pali text file 
 
@@ -173,22 +173,12 @@ Bhikkhupātimokkhapāḷi ebooks with Pāḷi syllable splitting lines  [https:/
 ![prc file on kindle ](Bhikkhu_patimokkhapali_syllable_recitation.jpg)
 
 
-## Misc.
+## To do
 
-+ For Python users, to install it
+(or will never do)
 
-```bash
+Make a pāḷi text to speech (PTTS) engine:
 
-python3 -m pip install git+https://github.com/vpnry/palieasyread.git#egg=palieasyread
++ using separated syllables approach?
 
-```
-
-Or 
-
-```bash 
-
-python3 setup.py install
-
-```
-
-+ Pāḷi text to speech: based on these separated syllables?
++ or deep machine learning approach using Sayadaws paritta chanting as voice input to train?

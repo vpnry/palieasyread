@@ -3,7 +3,7 @@
 # It splits correctly for most of the words, but not all.
 
 # Update: https://github.com/vpnry/palieasyread
-# this version: 0.0.2
+# this version: 0.0.3
 
 
 import sys
@@ -29,16 +29,17 @@ vowels += vowel_str.upper().split(',')
 # asp_consonants = 'ch,jh,kh,gh,th,ṭh,dh,ḍh,bh,ph'.split(',')
 
 escape_xh = OrderedDict([
-    ('kh', '1'),
-    ('gh', '2'),
-    ('ch', '3'),
-    ('jh', '4'),
-    ('th', '5'),
-    ('ṭh', '6'),
-    ('dh', '7'),
-    ('ḍh', '8'),
-    ('ph', '9'),
-    ('bh', '0'),
+    # Myanmar number 1->0
+    ('kh', '၁'),
+    ('gh', '၂'),
+    ('ch', '၃'),
+    ('jh', '၄'),
+    ('th', '၅'),
+    ('ṭh', '၆'),
+    ('dh', '၇'),
+    ('ḍh', '၈'),
+    ('ph', '၉'),
+    ('bh', '၀'),
 
     ('vh', '$'),
     # pariyogāḷhadhammo => pa ri yo gā ḷha dham mo
