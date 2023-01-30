@@ -3,12 +3,20 @@
 '''Split syllable in Bhikkhupātimokkhapāḷi
 
 Generate Bhikkhupatimokkhapali_syllable_recitation.epub with pandoc
+
+Last updated: 30 Jan 2023
 '''
 
 import os
 import re
 from bs4 import BeautifulSoup
 from palieasyread import easy_read
+
+from javascript import require  # pip3 install javascript
+PSC = require('@pnfo/pali-converter')  # npm install -g @pnfo/pali-converter
+# convertMixed = PSC.convertMixed #  https://github.com/pnfo/pali-converter
+convert = PSC.convert
+print(convert('mettā', 'my', 'ro'))
 
 
 sylDIV = ' '
@@ -61,12 +69,14 @@ def main(fin):
     toc_rex = re.findall(rex, html_toc)
 
     res = html_head
-    
+
     note = f'''<div style="border: grey solid 1px">
 <ul>
 Note:
 <br>
 <li>The Roman pāḷi text is from this VRI version https://www.tipitaka.org/romn/cscd/{save_html_file.replace('.html', '.xml')}</li>
+
+<li>Pāḷi script converter https://github.com/pnfo/pali-converter</li>
 
 <li>Pāḷi syllable splitting lines are generated using this script https://github.com/vpnry/palieasyread</li>
 
@@ -85,22 +95,25 @@ Note:
         if not line:
             res += line
             continue
-        pali_text = html_to_text(line)
-        if not pali_text.strip():
+        pali_ro_text = html_to_text(line)
+
+        pali_mm_text = convert(pali_ro_text, 'my', 'ro')
+
+        if not pali_ro_text.strip():
             res += line
             continue
         class_name = get_pclass(line)
 
         easy = easy_read(
-            pali_text,
+            pali_ro_text,
             syl_div=sylDIV,
             word_div=wordDIV,
             show_origin=False)
         if is_colorify:
             easy = colorify(easy, syl_div=sylDIV, word_div=wordDIV)
-            bline = f'<p class="{class_name}">{easy}</p>\n'
+            bline = f'<p class="{class_name}">{pali_mm_text.replace(".", "။")}</p>\n{line}\n<p class="{class_name}">{easy}</p>\n'
         else:
-            bline = f'{line}\n<p class="{class_name}">{easy}</p>\n'
+            bline = f'<p class="{class_name}">{pali_mm_text.replace(".", "။")}</p>\n{line}\n<p class="{class_name}">{easy}</p>\n'
         res += bline + '\n'
 
     # misc replace
@@ -108,7 +121,7 @@ Note:
         '<title>Tīkā > Vinayapiṭaka (ṭīkā) > Dvemātikāpāḷi > Bhikkhupātimokkhapāḷi</title>',
         '<title>Dvemātikāpāḷi - Bhikkhupātimokkhapāḷi</title>')
     res = res.replace('="../pta/textAndMenu.css"', '="textAndMenu.css"')
-    
+
     with open('textAndMenu.css', 'r', encoding='utf-8') as fi:
         css = fi.read()
 
@@ -119,7 +132,7 @@ Note:
     for k, v in toc_rex:
         res = res.replace(f'{k}"></h2>',
                           f'{k}">{v}</h2>')
-    
+
     with open(save_html_file, 'w', encoding='utf-8') as fh:
         fh.write(res)
         print('Wrote', save_html_file)
